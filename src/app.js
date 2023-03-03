@@ -1,7 +1,7 @@
 const express = require('express');
-const { Login, createNewUser } = require('./controllers');
-const validateFieldsNewUser = require('./middlewares/validateFieldsNewUser');
-const validateExistingUser = require('./middlewares/validateExistingUser');
+const { Login, createNewUser, listAllUsers } = require('./controllers');
+const { validateFieldsNewUser, validateExistingUser, validateJWT } = require('./middlewares');
+
 // ...
 
 const app = express();
@@ -16,6 +16,8 @@ app.use(express.json());
 app.post('/login', Login);
 
 app.post('/user', validateFieldsNewUser, validateExistingUser, createNewUser);
+
+app.get('/user', validateJWT, listAllUsers);
 
 // ...
 
