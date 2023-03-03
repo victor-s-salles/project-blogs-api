@@ -1,5 +1,5 @@
 const express = require('express');
-const { Login, createNewUser, listAllUsers } = require('./controllers');
+const { Login, createNewUser, listAllUsers, getUserById } = require('./controllers');
 const { validateFieldsNewUser, validateExistingUser, validateJWT } = require('./middlewares');
 
 // ...
@@ -18,6 +18,8 @@ app.post('/login', Login);
 app.post('/user', validateFieldsNewUser, validateExistingUser, createNewUser);
 
 app.get('/user', validateJWT, listAllUsers);
+
+app.get('/user/:id', validateJWT, getUserById);
 
 // ...
 
