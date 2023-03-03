@@ -1,6 +1,7 @@
 const express = require('express');
-const { Login } = require('./controllers');
-
+const { Login, createNewUser } = require('./controllers');
+const validateFieldsNewUser = require('./middlewares/validateFieldsNewUser');
+const validateExistingUser = require('./middlewares/validateExistingUser');
 // ...
 
 const app = express();
@@ -13,6 +14,8 @@ app.get('/', (_request, response) => {
 app.use(express.json());
 
 app.post('/login', Login);
+
+app.post('/user', validateFieldsNewUser, validateExistingUser, createNewUser);
 
 // ...
 

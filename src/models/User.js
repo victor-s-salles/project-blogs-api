@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) =>{
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            allowNull: false
+            allowNull: false,
+            autoIncrement: true,
         },
         displayName: DataTypes.STRING,
         email: DataTypes.STRING,
