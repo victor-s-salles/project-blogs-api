@@ -25,7 +25,7 @@ const updatePost = async (req, res) => {
     const { title, content } = req.body;
 
     if (!title || !content) {
-        res.status(400).json({ message: 'Some required fields are missing' });
+        return res.status(400).json({ message: 'Some required fields are missing' });
     }
 
     const post = await editPost({ postId: id, title, content, userId: req.user.id });
@@ -41,7 +41,9 @@ const updatePost = async (req, res) => {
 const removePost = async (req, res) => {
     const { id } = req.params;
 
-    const result = await deletePost({ postId: id, userId: req.user.id });
+    const userId = req.user.id;
+
+    const result = await deletePost({ postId: id, userId });
 
     if (result.type === 'NOTFOUND') {
         return res.status(404).json({ message: 'Post does not exist' });
