@@ -1,5 +1,5 @@
 const generateToken = require('../auth/generateToken');
-const { createUser, findAllUsers, findUserById } = require('../services');
+const { createUser, findAllUsers, findUserById, removeUser } = require('../services');
 
 const createNewUser = async (req, res) => {
     try {
@@ -38,4 +38,9 @@ const getUserById = async (req, res) => {
          return res.status(500).json({ message: 'Erro interno' });
      }
 };
-module.exports = { createNewUser, listAllUsers, getUserById };
+
+const deleteUser = async (req, res) => {
+    const result = await removeUser(req.user.id);
+    res.sendStatus(204);
+};
+module.exports = { createNewUser, listAllUsers, getUserById, deleteUser };

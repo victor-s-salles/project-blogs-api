@@ -1,5 +1,5 @@
 const { getByEmail, createUser, 
-        findAllUsers, findUserById, 
+        findAllUsers, findUserById, removeUser,
       } = require('./User');
 const { findAllCategories, insertCategory } = require('./Category');
 const { insertNewPost } = require('./PostCategory');
@@ -17,4 +17,5 @@ module.exports = {
     findPostById,
     editPost,
     deletePost,
+    removeUser,
 };

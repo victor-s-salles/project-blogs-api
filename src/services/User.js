@@ -18,9 +18,14 @@ const findUserById = async (id) => {
     const user = await User.findByPk(id, { attributes: { exclude: 'password' } });
     return user;
 };
+const removeUser = async (id) => {
+    const result = await User.destroy({ where: { id } });
+    console.log(result);
+};
 module.exports = {
     getByEmail,
     createUser,
     findAllUsers,
     findUserById,
+    removeUser,
 };
