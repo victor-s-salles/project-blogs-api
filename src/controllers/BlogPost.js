@@ -56,9 +56,9 @@ const removePost = async (req, res) => {
 };
 
 const searchPostByQ = async (req, res) => {
-    const { q = '' } = req.query;
+    const { q } = req.query;
 
-    const result = await searchPost(`%${q}%`);
+    const result = await searchPost(q);
 
     return res.status(200).json(result);
 };

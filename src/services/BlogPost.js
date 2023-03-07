@@ -63,10 +63,11 @@ const deletePost = async ({ postId, userId }) => {
   return { type: '', message: '' };
 };
 
-const searchPost = async (q) => {
+const searchPost = async (q = '') => {
+  const search = `%${q}%`;
   const posts = await BlogPost.findAll({
-    where: { [Op.or]: [{ title: { [Op.like]: q } }, 
-    { content: { [Op.like]: q } }] },
+    where: { [Op.or]: [{ title: { [Op.like]: search } }, 
+    { content: { [Op.like]: search } }] },
       include: [{
         model: User,
         as: 'user',
