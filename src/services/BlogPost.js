@@ -15,8 +15,20 @@ const findAllPosts = async () => {
 };
 
 const findPostById = async (id) => {
-    const post = await BlogPost.findByPk(id);
-    return post;
+  try {
+    const post = await BlogPost.findByPk(id, {
+        include: [
+            { model: User, as: 'user', attributes: { exclude: 'password' } },
+            { model: Category, as: 'categories', through: { attributes: [] } },
+        ],
+    });
+    if (!post) {
+        return { type: 'NOTFOUND' };
+    }
+    return { type: '', message: post };
+  } catch (error) {
+    return { type: 'ERROR', message: error };
+  }
 };
 
 const editPost = async () => {
