@@ -1,4 +1,4 @@
-const { findAllPosts, findPostById, editPost } = require('../services');
+const { findAllPosts, findPostById, editPost, deletePost } = require('../services');
 
 const getAllPosts = async (_req, res) => {
     const posts = await findAllPosts();
@@ -38,8 +38,26 @@ const updatePost = async (req, res) => {
     return res.status(200).json(newPost.message);
 };
 
+const removePost = async (req, res) => {
+    const { id } = req.params;
+
+    const result = await deletePost({ postId: id, userId: req.user.id });
+
+    if (result.type === 'NOTFOUND') {
+        return res.status(404).json({ message: 'Post does not exist' });
+    }
+    if (result.type === 'UNAUTHORIZED') {
+        return res.status(401).json({ message: 'Unauthorized user' });
+    }
+    if (result.type) {
+        return res.status(404).json({ message: 'Erro interno' });
+    }
+    return res.sendStatus(204);
+};
+
 module.exports = {
     getAllPosts,
     getPostById,
     updatePost,
+    removePost,
 };
