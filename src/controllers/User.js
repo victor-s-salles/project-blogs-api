@@ -40,7 +40,7 @@ const getUserById = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-    const result = await removeUser(req.user.id);
+    await removeUser(req.user.id);
     res.sendStatus(204);
 };
 module.exports = { createNewUser, listAllUsers, getUserById, deleteUser };

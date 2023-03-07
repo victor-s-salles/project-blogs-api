@@ -1,4 +1,4 @@
-const { findAllPosts, findPostById, editPost, deletePost } = require('../services');
+const { findAllPosts, findPostById, editPost, deletePost, searchPost } = require('../services');
 
 const getAllPosts = async (_req, res) => {
     const posts = await findAllPosts();
@@ -55,9 +55,18 @@ const removePost = async (req, res) => {
     return res.sendStatus(204);
 };
 
+const searchPostByQ = async (req, res) => {
+    const { q = '' } = req.query;
+
+    const result = await searchPost(`%${q}%`);
+
+    return res.status(200).json(result);
+};
+
 module.exports = {
     getAllPosts,
     getPostById,
     updatePost,
     removePost,
+    searchPostByQ,
 };
