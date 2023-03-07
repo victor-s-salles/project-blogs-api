@@ -31,8 +31,20 @@ const findPostById = async (id) => {
   }
 };
 
-const editPost = async () => {
-    
+const editPost = async ({ postId, userId, title, content }) => {
+    const oldPost = await BlogPost.findOne({ where: { id: postId } });
+
+    if (!oldPost) {
+        return { type: 'NOTFOUND', message: 'Post not found' };
+    }
+
+    if (oldPost.userId !== userId) {
+        return { type: 'UNAUTHORIZED', message: 'Unauthorized user' };
+    }
+
+    const updatedPost = await BlogPost.update({ title, content }, { where: { id: postId } });
+
+    return { type: '', message: updatedPost };
 };
 
 module.exports = {

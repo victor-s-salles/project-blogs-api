@@ -1,4 +1,4 @@
-const { findAllPosts, findPostById } = require('../services');
+const { findAllPosts, findPostById, editPost } = require('../services');
 
 const getAllPosts = async (_req, res) => {
     const posts = await findAllPosts();
@@ -20,7 +20,26 @@ const getPostById = async (req, res) => {
     res.status(200).json(post.message);
 };
 
+const updatePost = async (req, res) => {
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    if (!title || !content) {
+        res.status(400).json({ message: 'Some required fields are missing' });
+    }
+
+    const post = await editPost({ postId: id, title, content, userId: req.user.id });
+
+    if (post.type) {
+        return res.status(401).json({ message: post.message });
+    }
+    const newPost = await findPostById(id);
+
+    return res.status(200).json(newPost.message);
+};
+
 module.exports = {
     getAllPosts,
     getPostById,
+    updatePost,
 };
