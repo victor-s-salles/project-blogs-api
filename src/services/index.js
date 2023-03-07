@@ -3,6 +3,7 @@ const { getByEmail, createUser,
       } = require('./User');
 const { findAllCategories, insertCategory } = require('./Category');
 const { insertNewPost } = require('./PostCategory');
+const { findAllPosts, findPostById, editPost } = require('./BlogPost');
 
 module.exports = {
     getByEmail,
@@ -12,4 +13,7 @@ module.exports = {
     findAllCategories,
     insertCategory,
     insertNewPost,
+    findAllPosts,
+    findPostById,
+    editPost,
 };
